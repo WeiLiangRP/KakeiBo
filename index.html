@@ -110,16 +110,27 @@ a { color: inherit; }
 .nav-links a { text-decoration: none; color: var(--sumi-soft); position: relative; padding: 4px 0; }
 .nav-links a:hover { color: var(--sumi); }
 .nav-cta {
-  background: #229ED9; /* Telegram blue, on purpose — signals "this leaves to Telegram" */
+  background: linear-gradient(135deg, #2FB4F0, #229ED9);
   color: #fff !important;
-  padding: 10px 20px;
-  border-radius: 3px;
-  font-size: 0.85rem;
+  padding: 13px 26px 13px 20px;
+  border-radius: 999px;
+  font-size: 0.88rem;
+  font-weight: 600;
   display: inline-flex;
   align-items: center;
-  gap: 8px;
+  gap: 9px;
+  box-shadow: 0 2px 10px rgba(34, 158, 217, 0.35), inset 0 1px 0 rgba(255,255,255,0.25);
+  transition: transform 0.18s ease, box-shadow 0.18s ease, filter 0.18s ease;
+  position: relative;
 }
-.nav-cta:hover { background: #1c87ba; }
+.nav-cta svg { width: 16px; height: 16px; flex-shrink: 0; transition: transform 0.25s ease; }
+.nav-cta:hover {
+  transform: translateY(-1px) scale(1.03);
+  box-shadow: 0 6px 18px rgba(34, 158, 217, 0.48), inset 0 1px 0 rgba(255,255,255,0.3);
+  filter: brightness(1.04);
+}
+.nav-cta:hover svg { transform: translateX(2px); }
+.nav-cta:active { transform: translateY(0) scale(0.99); }
 .nav-toggle {
   display: none; background: none; border: 1px solid var(--sumi);
   width: 40px; height: 40px; border-radius: 3px;
@@ -156,10 +167,31 @@ a { color: inherit; }
 .btn-ghost { background: transparent; color: var(--sumi); }
 .btn-ghost:hover { background: var(--sumi); color: var(--washi); }
 .btn-telegram {
-  background: #229ED9; border-color: #229ED9; color: #fff;
+  background: linear-gradient(135deg, #2FB4F0, #229ED9);
+  border-color: transparent;
+  color: #fff;
+  font-weight: 600;
+  box-shadow: 0 4px 16px rgba(34, 158, 217, 0.35), inset 0 1px 0 rgba(255,255,255,0.2);
+  position: relative;
+  overflow: hidden;
 }
-.btn-telegram:hover { background: #1c87ba; border-color: #1c87ba; transform: translateY(-1px); }
+.btn-telegram svg { width: 18px; height: 18px; flex-shrink: 0; transition: transform 0.25s ease; }
+.btn-telegram:hover {
+  background: linear-gradient(135deg, #35bcfb, #2596cf);
+  border-color: transparent;
+  transform: translateY(-2px) scale(1.015);
+  box-shadow: 0 10px 26px rgba(34, 158, 217, 0.45), inset 0 1px 0 rgba(255,255,255,0.25);
+}
+.btn-telegram:hover svg { transform: translateX(3px); }
+.btn-telegram:active { transform: translateY(-1px) scale(0.99); }
 .btn-lg { padding: 18px 34px; font-size: 1.05rem; }
+.btn-pulse { animation: btn-pulse-ring 2.6s ease-out infinite; }
+@keyframes btn-pulse-ring {
+  0%   { box-shadow: 0 4px 16px rgba(34,158,217,0.35), 0 0 0 0 rgba(34,158,217,0.45); }
+  70%  { box-shadow: 0 4px 16px rgba(34,158,217,0.35), 0 0 0 14px rgba(34,158,217,0); }
+  100% { box-shadow: 0 4px 16px rgba(34,158,217,0.35), 0 0 0 0 rgba(34,158,217,0); }
+}
+@media (prefers-reduced-motion: reduce) { .btn-pulse { animation: none; } }
 
 /* ---------------- Sections ---------------- */
 section { position: relative; z-index: 1; padding: 100px 0; }
@@ -256,6 +288,56 @@ section { position: relative; z-index: 1; padding: 100px 0; }
 @media (max-width: 900px) { .cat-grid { grid-template-columns: 1fr 1fr; } }
 @media (max-width: 560px) { .cat-grid { grid-template-columns: 1fr; } }
 
+/* ---------------- Savings estimator (interactive) ---------------- */
+.estimator-card {
+  display: grid; grid-template-columns: 1fr 1fr; gap: 0;
+  background: #FBF7EE; border: 1px solid var(--paper-line); border-radius: 4px;
+  overflow: hidden; margin-top: 40px;
+}
+.estimator-inputs { padding: 34px 36px; border-right: 1px solid var(--paper-line); }
+.estimator-output { padding: 34px 36px; display: flex; flex-direction: column; align-items: center; justify-content: center; }
+@media (max-width: 860px) {
+  .estimator-card { grid-template-columns: 1fr; }
+  .estimator-inputs { border-right: none; border-bottom: 1px solid var(--paper-line); }
+}
+
+.field-row { margin-bottom: 26px; }
+.field-row:last-child { margin-bottom: 0; }
+.field-row label, .field-row-head label {
+  display: block; font-size: 0.78rem; letter-spacing: 0.04em; color: var(--sumi-soft);
+  margin-bottom: 10px; font-family: var(--font-mono); text-transform: uppercase;
+}
+.field-row-head { display: flex; justify-content: space-between; align-items: baseline; }
+.field-row-head label { margin-bottom: 0; }
+.field-row-head .mono { color: var(--beni); font-weight: 700; }
+
+.input-prefixed {
+  display: flex; align-items: center; border: 1.5px solid var(--sumi); border-radius: 3px;
+  background: var(--washi); overflow: hidden;
+}
+.input-prefixed span { padding: 12px 10px 12px 14px; color: var(--sumi-soft); font-family: var(--font-mono); }
+.input-prefixed input {
+  border: none; background: transparent; padding: 12px 14px 12px 0;
+  font-family: var(--font-mono); font-size: 1rem; width: 100%; color: var(--sumi);
+}
+.input-prefixed input:focus { outline: none; }
+
+input[type="range"] { width: 100%; accent-color: var(--beni); margin-top: 6px; }
+
+.estimator-bars { display: flex; align-items: flex-end; gap: 32px; height: 180px; margin-bottom: 14px; }
+.estimator-bar-track { width: 84px; height: 100%; display: flex; align-items: flex-end; }
+.estimator-bar { width: 100%; border-radius: 3px 3px 0 0; transition: height 0.5s cubic-bezier(.2,.9,.3,1); min-height: 3px; }
+.estimator-bar-now { background: var(--sumi-soft); opacity: 0.55; }
+.estimator-bar-with { background: var(--moss); }
+.estimator-bar-labels { display: flex; gap: 32px; margin-bottom: 24px; }
+.estimator-bar-label-col { width: 84px; text-align: center; }
+.estimator-bar-label { display: block; font-size: 0.72rem; color: var(--sumi-soft); text-transform: uppercase; letter-spacing: 0.05em; }
+.estimator-bar-figure { display: block; margin-top: 2px; font-size: 0.85rem; color: var(--sumi); }
+
+.estimator-callout { text-align: center; }
+.estimator-callout-figure { display: block; font-size: 2.1rem; color: var(--moss-deep); font-weight: 700; }
+.estimator-callout-label { display: block; margin-top: 4px; font-size: 0.82rem; color: var(--sumi-soft); }
+
 /* ---------------- Chat preview (illustrative) ---------------- */
 .chat-mock {
   background: #0e1621; border-radius: 10px; padding: 22px; max-width: 420px;
@@ -327,9 +409,10 @@ section { position: relative; z-index: 1; padding: 100px 0; }
     <button class="nav-toggle" id="navToggle" aria-label="Toggle menu" aria-expanded="false"><span></span></button>
     <ul class="nav-links" id="navLinks">
       <li><a href="#method">The method</a></li>
+      <li><a href="#estimator">Estimate savings</a></li>
       <li><a href="#about">About</a></li>
       <li><a href="#categories">Categories</a></li>
-      <li><a href="https://t.me/mykakeibo_bot" class="nav-cta" target="_blank" rel="noopener"> Chat on Telegram </a></li>
+      <li><a href="https://t.me/mykakeibo_bot" class="nav-cta" target="_blank" rel="noopener"><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M2 21l21-9L2 3v7l15 2-15 2z"/></svg>Chat on Telegram</a></li>
     </ul>
   </div>
 </nav>
@@ -345,7 +428,7 @@ section { position: relative; z-index: 1; padding: 100px 0; }
           <h1 class="hero-title">Before you spend,<br>ask yourself four<br>questions.</h1>
           <p class="hero-sub">Kakeibo (家計簿) is the century-old Japanese practice of hand-recording every yen — not to restrict you, but to make you notice. We turned that ritual into a Telegram chat. People who keep a kakeibo typically save <strong>10–35%</strong> more than people who don't track anything at all.</p>
           <div class="hero-actions">
-            <a href="https://t.me/mykakeibo_bot" class="btn btn-telegram" target="_blank" rel="noopener">Chat with @mykakeibo_bot</a>
+            <a href="https://t.me/mykakeibo_bot" class="btn btn-telegram" target="_blank" rel="noopener"><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M2 21l21-9L2 3v7l15 2-15 2z"/></svg>Chat with @mykakeibo_bot</a>
             <a href="#method" class="btn btn-ghost">See the method</a>
           </div>
         </div>
@@ -433,7 +516,7 @@ section { position: relative; z-index: 1; padding: 100px 0; }
         </div>
       </div>
       <div style="margin-top:40px;">
-        <a href="https://t.me/mykakeibo_bot" class="btn btn-telegram" target="_blank" rel="noopener">Answer them in the chat →</a>
+        <a href="https://t.me/mykakeibo_bot" class="btn btn-telegram" target="_blank" rel="noopener"><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M2 21l21-9L2 3v7l15 2-15 2z"/></svg>Answer them in the chat</a>
       </div>
     </div>
   </section>
@@ -526,6 +609,61 @@ section { position: relative; z-index: 1; padding: 100px 0; }
     </div>
   </section>
 
+  <div class="wrap"><div class="divider"></div></div>
+
+  <!-- SAVINGS ESTIMATOR (interactive) -->
+  <section id="estimator">
+    <div class="wrap">
+      <span class="eyebrow">See it with your numbers</span>
+      <h2 class="section-title">What could four questions save you?</h2>
+      <p style="max-width:560px;">Move the slider to roughly match your month. Nothing here is tracked or sent anywhere — it's just here to show the shape of it before you take it to the chat.</p>
+
+      <div class="estimator-card reveal">
+        <div class="estimator-inputs">
+          <div class="field-row">
+            <label for="estIncome">Monthly income</label>
+            <div class="input-prefixed">
+              <span>$</span>
+              <input type="number" id="estIncome" value="4000" min="0" step="50" inputmode="decimal">
+            </div>
+          </div>
+          <div class="field-row">
+            <div class="field-row-head">
+              <label for="estRate">What you currently save, roughly</label>
+              <span class="mono" id="estRateDisplay">10%</span>
+            </div>
+            <input type="range" id="estRate" min="0" max="40" value="10" step="1">
+          </div>
+        </div>
+
+        <div class="estimator-output">
+          <div class="estimator-bars" aria-hidden="true">
+            <div class="estimator-bar-track"><div class="estimator-bar estimator-bar-now" id="barNow"></div></div>
+            <div class="estimator-bar-track"><div class="estimator-bar estimator-bar-with" id="barWith"></div></div>
+          </div>
+          <div class="estimator-bar-labels">
+            <div class="estimator-bar-label-col">
+              <span class="estimator-bar-label">Now / yr</span>
+              <span class="mono estimator-bar-figure" id="figNow">$0</span>
+            </div>
+            <div class="estimator-bar-label-col">
+              <span class="estimator-bar-label">With kakeibo / yr</span>
+              <span class="mono estimator-bar-figure" id="figWith">$0</span>
+            </div>
+          </div>
+          <div class="estimator-callout">
+            <span class="estimator-callout-figure mono" id="estDelta">+$0</span>
+            <span class="estimator-callout-label">more saved per year, roughly</span>
+          </div>
+        </div>
+      </div>
+
+      <div style="margin-top:32px; text-align:center;">
+        <a href="https://t.me/mykakeibo_bot" class="btn btn-telegram btn-lg" target="_blank" rel="noopener"><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M2 21l21-9L2 3v7l15 2-15 2z"/></svg>Get this plan from @mykakeibo_bot</a>
+      </div>
+    </div>
+  </section>
+
   <!-- FINAL CTA -->
   <section class="cta-band" id="cta">
     <div class="wrap cta-band-inner reveal">
@@ -542,7 +680,7 @@ section { position: relative; z-index: 1; padding: 100px 0; }
         <div>
           <span class="cta-handle">@mykakeibo_bot</span>
           <p>Scan the code, or tap the button below on your phone. Telegram opens the chat automatically.</p>
-          <a href="https://t.me/mykakeibo_bot" class="btn btn-telegram btn-lg" target="_blank" rel="noopener">Chat with @mykakeibo_bot →</a>
+          <a href="https://t.me/mykakeibo_bot" class="btn btn-telegram btn-lg btn-pulse" target="_blank" rel="noopener"><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M2 21l21-9L2 3v7l15 2-15 2z"/></svg>Chat with @mykakeibo_bot</a>
         </div>
       </div>
     </div>
@@ -692,6 +830,97 @@ section { position: relative; z-index: 1; padding: 100px 0; }
     });
   }, { threshold: 0.3 });
   io.observe(document.getElementById('ledgerHero'));
+})();
+
+// Savings estimator — live "what could this save me" calculator
+(function () {
+  const income = document.getElementById('estIncome');
+  const rate = document.getElementById('estRate');
+  const rateDisplay = document.getElementById('estRateDisplay');
+  const barNow = document.getElementById('barNow');
+  const barWith = document.getElementById('barWith');
+  const figNow = document.getElementById('figNow');
+  const figWith = document.getElementById('figWith');
+  const estDelta = document.getElementById('estDelta');
+  if (!income || !rate) return;
+
+  const MAX_BAR_PX = 176;
+
+  function fmt(n) {
+    return '$' + Math.round(n).toLocaleString('en-US');
+  }
+
+  function animateNumber(el, from, to, duration) {
+    const start = performance.now();
+    function tick(now) {
+      const p = Math.min(1, (now - start) / duration);
+      const eased = 1 - Math.pow(1 - p, 3);
+      const val = from + (to - from) * eased;
+      el.textContent = fmt(val);
+      if (p < 1) requestAnimationFrame(tick);
+    }
+    requestAnimationFrame(tick);
+  }
+
+  let lastNow = 0;
+  let lastWith = 0;
+
+  // estDelta needs a "+" prefix, so give it its own animator
+  function animateDelta(from, to) {
+    const start = performance.now();
+    const duration = 500;
+    function tick(now) {
+      const p = Math.min(1, (now - start) / duration);
+      const eased = 1 - Math.pow(1 - p, 3);
+      const val = from + (to - from) * eased;
+      estDelta.textContent = '+' + fmt(val);
+      if (p < 1) requestAnimationFrame(tick);
+    }
+    requestAnimationFrame(tick);
+  }
+
+  let lastDelta = 0;
+  function updateAll() {
+    const inc = Math.max(0, Number(income.value) || 0);
+    const r = Number(rate.value);
+    rateDisplay.textContent = r + '%';
+
+    const annualNow = inc * 12 * (r / 100);
+    const newRate = Math.min(50, r * 1.25 + 5);
+    const annualWith = inc * 12 * (newRate / 100);
+    const delta = Math.max(0, annualWith - annualNow);
+
+    const maxVal = Math.max(annualNow, annualWith, 1);
+    barNow.style.height = Math.max(3, (annualNow / maxVal) * MAX_BAR_PX) + 'px';
+    barWith.style.height = Math.max(3, (annualWith / maxVal) * MAX_BAR_PX) + 'px';
+
+    animateNumber(figNow, lastNow, annualNow, 400);
+    animateNumber(figWith, lastWith, annualWith, 400);
+    animateDelta(lastDelta, delta);
+
+    lastNow = annualNow;
+    lastWith = annualWith;
+    lastDelta = delta;
+  }
+
+  income.addEventListener('input', updateAll);
+  rate.addEventListener('input', updateAll);
+
+  // animate in once the card scrolls into view
+  const card = document.querySelector('.estimator-card');
+  if (card) {
+    const io2 = new IntersectionObserver((entries) => {
+      entries.forEach((entry) => {
+        if (entry.isIntersecting) {
+          updateAll();
+          io2.unobserve(entry.target);
+        }
+      });
+    }, { threshold: 0.3 });
+    io2.observe(card);
+  } else {
+    updateAll();
+  }
 })();
 </script>
 </body>
