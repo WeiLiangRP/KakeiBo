@@ -302,6 +302,33 @@ section { position: relative; z-index: 1; padding: 100px 0; }
 
 .timeline { display: flex; flex-direction: column; gap: 0; }
 .about-illustration { width: 100%; height: auto; margin-bottom: 12px; perspective: 1000px; }
+
+/* ---------------- Photo frames (uploaded photography) ---------------- */
+.photo-frame {
+  border: 1.5px solid var(--sumi);
+  border-radius: 3px;
+  overflow: hidden;
+  box-shadow: 0 14px 34px rgba(43, 38, 32, 0.14);
+  background: var(--washi-deep);
+}
+.photo-frame img { display: block; width: 100%; height: auto; }
+.photo-caption { margin: 14px 2px 0; font-size: 0.85rem; font-style: italic; color: var(--sumi-soft); }
+
+.media-frame {
+  position: relative;
+  width: 100%;
+  padding-top: 62%;
+  border: 1.5px solid var(--sumi);
+  border-radius: 3px;
+  overflow: hidden;
+  box-shadow: 0 14px 34px rgba(43, 38, 32, 0.14);
+  background: var(--washi-deep);
+}
+.media-frame iframe, .media-frame img {
+  position: absolute; inset: 0; width: 100%; height: 100%;
+  object-fit: cover; border: 0; display: block;
+}
+@media (max-width: 860px) { .media-frame { padding-top: 56.25%; } }
 .book-page-left, .book-page-right {
   transform-box: fill-box;
   opacity: 0;
@@ -553,10 +580,10 @@ input[type="range"] { width: 100%; accent-color: var(--beni); margin-top: 6px; }
     <button class="nav-toggle" id="navToggle" aria-label="Toggle menu" aria-expanded="false"><span></span></button>
     <ul class="nav-links" id="navLinks">
       <li><a href="#method">The method</a></li>
-      <li><a href="#estimator">Estimate savings</a></li>
-      <li><a href="#faq">FAQ</a></li>
       <li><a href="#about">About</a></li>
+      <li><a href="#watch">Watch</a></li>
       <li><a href="#categories">Categories</a></li>
+      <li><a href="#estimator">Estimate savings</a></li>
       <li><a href="https://t.me/mykakeibo_bot" class="nav-cta" target="_blank" rel="noopener"><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M2 21l21-9L2 3v7l15 2-15 2z"/></svg>Chat on Telegram</a></li>
     </ul>
   </div>
@@ -649,36 +676,11 @@ input[type="range"] { width: 100%; accent-color: var(--beni); margin-top: 6px; }
         <p>The method didn't ask people to earn more or cut everything out. It asked one household to sit down at the start of each month, write down four honest answers, and check back in at the end. That was the whole system. It still is — we just moved the notebook into Telegram.</p>
       </div>
       <div class="reveal timeline">
-        <svg class="about-illustration" viewBox="0 0 320 200" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="An open ledger book with a pen and stacked coins">
-          <path class="book-spine" d="M155 30 L165 30 L165 175 L155 175 Z" fill="rgba(43,38,32,0.08)"/>
-          <g class="book-page-left">
-            <path d="M20 40 L155 30 L155 175 L20 185 Z" fill="#FBF7EE" stroke="#2B2620" stroke-width="2"/>
-            <line x1="30" y1="60" x2="145" y2="55" stroke="rgba(43,38,32,0.28)" stroke-width="1.4"/>
-            <line x1="30" y1="80" x2="145" y2="76" stroke="rgba(43,38,32,0.28)" stroke-width="1.4"/>
-            <line x1="30" y1="100" x2="145" y2="97" stroke="rgba(43,38,32,0.28)" stroke-width="1.4"/>
-            <line x1="30" y1="120" x2="145" y2="118" stroke="rgba(43,38,32,0.28)" stroke-width="1.4"/>
-            <line x1="30" y1="140" x2="145" y2="139" stroke="rgba(43,38,32,0.28)" stroke-width="1.4"/>
-            <ellipse cx="45" cy="168" rx="16" ry="6" fill="none" stroke="#B08D57" stroke-width="2"/>
-            <ellipse cx="45" cy="162" rx="16" ry="6" fill="none" stroke="#B08D57" stroke-width="2"/>
-            <ellipse cx="45" cy="156" rx="16" ry="6" fill="#B08D57" stroke="#B08D57" stroke-width="2"/>
-          </g>
-          <g class="book-page-right">
-            <path d="M300 40 L165 30 L165 175 L300 185 Z" fill="#FBF7EE" stroke="#2B2620" stroke-width="2"/>
-            <line x1="175" y1="55" x2="290" y2="60" stroke="rgba(43,38,32,0.28)" stroke-width="1.4"/>
-            <line x1="175" y1="76" x2="290" y2="80" stroke="rgba(43,38,32,0.28)" stroke-width="1.4"/>
-            <line x1="175" y1="97" x2="290" y2="100" stroke="rgba(43,38,32,0.28)" stroke-width="1.4"/>
-            <line x1="175" y1="118" x2="290" y2="120" stroke="rgba(43,38,32,0.28)" stroke-width="1.4"/>
-            <line x1="175" y1="139" x2="290" y2="140" stroke="rgba(43,38,32,0.28)" stroke-width="1.4"/>
-            <g transform="rotate(-8 260 60)">
-              <rect x="245" y="45" width="30" height="30" rx="4" fill="none" stroke="#B33A2E" stroke-width="2"/>
-              <text x="260" y="66" text-anchor="middle" font-family="'Shippori Mincho', serif" font-size="14" fill="#B33A2E">記</text>
-            </g>
-          </g>
-          <g class="book-pen">
-            <rect x="0" y="0" width="8" height="120" rx="4" fill="#B33A2E"/>
-            <rect x="0" y="112" width="8" height="16" rx="2" fill="#2B2620"/>
-          </g>
-        </svg>
+        <div class="photo-frame about-illustration">
+          <img src="https://i.ibb.co/4v7vTqf/ledger-and-phone.jpg"
+          alt="A hand holds an antique handwritten household ledger open beside a phone showing the Kakeibo Telegram chat, with a small potted seedling nearby"
+          loading="lazy">
+        </div>
         <div class="timeline-row">
           <span class="mono timeline-year">1904</span>
           <span>Hani Motoko publishes the first kakeibo in a Japanese women's magazine.</span>
@@ -694,6 +696,30 @@ input[type="range"] { width: 100%; accent-color: var(--beni); margin-top: 6px; }
         <div class="timeline-row">
           <span class="mono timeline-year">2026</span>
           <span>We build the four questions into a Telegram bot — without losing the parts that made people actually use it.</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <div class="wrap"><div class="divider"></div></div>
+
+  <!-- WATCH -->
+  <section id="watch">
+    <div class="wrap">
+      <span class="eyebrow">See it in motion</span>
+      <h2 class="section-title">Watch the four questions happen in real time</h2>
+      <p style="max-width:560px;">A short walkthrough of a real month in the chat — from the first "good morning" to the ledger closing itself out.</p>
+      <div class="two-col" style="margin-top:44px; align-items:start;">
+        <div class="media-frame reveal">
+          <iframe src="https://share.synthesia.io/embeds/videos/1618bf0f-13fa-461d-8d90-71a257c8b19a" loading="lazy" title="Synthesia video player - test" allowfullscreen allow="encrypted-media; fullscreen; microphone;"></iframe>
+        </div>
+        <div class="reveal">
+          <div class="media-frame">
+            <img src="https://i.ibb.co/KjYfdR3J/zen-garden.jpg"
+            alt="A mossy stone garden path leading toward a traditional Japanese house"
+            loading="lazy">
+          </div>
+          <p class="photo-caption">Kakeibo asks you to slow down for four questions a month — that's the whole practice.</p>
         </div>
       </div>
     </div>
@@ -844,37 +870,6 @@ input[type="range"] { width: 100%; accent-color: var(--beni); margin-top: 6px; }
 
   <div class="wrap"><div class="divider"></div></div>
 
-  <!-- FAQ -->
-  <section id="faq">
-    <div class="wrap">
-      <span class="eyebrow">Before you ask</span>
-      <h2 class="section-title">A few things people usually want to know</h2>
-
-      <div class="faq-list">
-        <details class="faq-item reveal">
-          <summary>Is it actually free?</summary>
-          <p>Yes. Chatting with @mykakeibo_bot doesn't cost anything — it's a Telegram bot, not a subscription.</p>
-        </details>
-        <details class="faq-item reveal">
-          <summary>Where does my financial info go?</summary>
-          <p>It stays in your conversation with the bot on Telegram. Nothing on this page tracks or stores what you type — the savings estimator above runs entirely in your browser.</p>
-        </details>
-        <details class="faq-item reveal">
-          <summary>Do I need to install another app?</summary>
-          <p>No. If you already have Telegram, you already have everything you need. No separate account, no download.</p>
-        </details>
-        <details class="faq-item reveal">
-          <summary>What happens if I miss a month?</summary>
-          <p>Nothing breaks. Kakeibo is a habit, not a streak — you pick back up with this month's four questions whenever you're ready.</p>
-        </details>
-        <details class="faq-item reveal">
-          <summary>Can my partner or household use it too?</summary>
-          <p>Each person chats with the bot separately right now — it's built around one household ledger per conversation, the way the original notebook worked.</p>
-        </details>
-      </div>
-    </div>
-  </section>
-
   <!-- FINAL CTA -->
   <section class="cta-band" id="cta">
     <div class="wrap cta-band-inner reveal">
@@ -916,8 +911,9 @@ input[type="range"] { width: 100%; accent-color: var(--beni); margin-top: 6px; }
           <li><a href="#top">Home</a></li>
           <li><a href="#method">The method</a></li>
           <li><a href="#about">About</a></li>
+          <li><a href="#watch">Watch</a></li>
           <li><a href="#categories">Categories</a></li>
-          <li><a href="#faq">FAQ</a></li>
+          <li><a href="#estimator">Estimate savings</a></li>
         </ul>
       </div>
       <div>
@@ -1014,7 +1010,7 @@ input[type="range"] { width: 100%; accent-color: var(--beni); margin-top: 6px; }
 // No account, no database: session id + message count live only in
 // this browser tab (sessionStorage), capped at 5 messages.
 (function () {
-  const TRIAL_WEBHOOK_URL = "https://n8ngc.codeblazar.org/webhook/cf4bfc13-4607-4a10-afaa-f75ef9d31f8b/chat";
+  const TRIAL_WEBHOOK_URL = "https://n8ngc.codeblazar.org/webhook/kakeibo-trial-chat";
   const TRIAL_LIMIT = 5;
 
   const widget = document.getElementById('trialChat');
